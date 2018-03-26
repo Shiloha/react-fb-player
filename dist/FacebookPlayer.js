@@ -103,7 +103,7 @@ var FacebookPlayer = function (_React$Component) {
           _this.videoPlayer = msg.instance;
 
           // Dispatch ready event
-          if (onReady) onReady(id, _this.videoPlayer);
+          if (onReady) onReady(_this.videoPlayer);
 
           // Subscribe to events
           _this.subscribe();
