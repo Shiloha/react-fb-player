@@ -1,13 +1,13 @@
-import React from 'react';
-import { string, number, func, bool } from 'prop-types';
+import React from "react";
+import { string, number, func, bool } from "prop-types";
 
 class FacebookPlayer extends React.Component {
   static propTypes = {
     id: string,
     className: string,
-    appId: string.isRequired,
-    sdkVersion: string,
-    videoId: string.isRequired,
+    appId: number.isRequired,
+    sdkVersion: number,
+    videoId: number.isRequired,
     width: number,
     allowfullscreen: bool,
     autoplay: bool,
@@ -19,7 +19,7 @@ class FacebookPlayer extends React.Component {
     onFinishedPlaying: func,
     onStartedBuffering: func,
     onFinishedBuffering: func,
-    onError: func,
+    onError: func
   };
 
   static defaultProps = {
@@ -27,8 +27,8 @@ class FacebookPlayer extends React.Component {
     autoplay: false,
     showText: false,
     showCaptions: false,
-    width: 'auto',
-  }
+    width: "auto"
+  };
 
   constructor(props) {
     super(props);
@@ -39,41 +39,39 @@ class FacebookPlayer extends React.Component {
      */
     this.eventsToListen = [
       {
-        event: 'startedPlaying',
-        listener: (props.onStartedPlaying) ?
-                  () => this.props.onStartedPlaying(this.props.id) :
-                  null,
+        event: "startedPlaying",
+        listener: props.onStartedPlaying
+          ? () => this.props.onStartedPlaying(this.props.id)
+          : null
       },
       {
-        event: 'paused',
-        listener: (props.onStartedPlaying) ?
-                  () => this.props.onPaused(this.props.id) :
-                  null,
+        event: "paused",
+        listener: props.onStartedPlaying
+          ? () => this.props.onPaused(this.props.id)
+          : null
       },
       {
-        event: 'finishedPlaying',
-        listener: (props.onFinishedPlaying) ?
-                  () => this.props.onFinishedPlaying(this.props.id) :
-                  null,
+        event: "finishedPlaying",
+        listener: props.onFinishedPlaying
+          ? () => this.props.onFinishedPlaying(this.props.id)
+          : null
       },
       {
-        event: 'startedBuffering',
-        listener: (props.onStartedBuffering) ?
-                  () => this.props.onStartedBuffering(this.props.id) :
-                  null,
+        event: "startedBuffering",
+        listener: props.onStartedBuffering
+          ? () => this.props.onStartedBuffering(this.props.id)
+          : null
       },
       {
-        event: 'finishedBuffering',
-        listener: (props.onFinishedBuffering) ?
-                  () => this.props.onFinishedBuffering(this.props.id) :
-                  null,
+        event: "finishedBuffering",
+        listener: props.onFinishedBuffering
+          ? () => this.props.onFinishedBuffering(this.props.id)
+          : null
       },
       {
-        event: 'error',
-        listener: (props.onError) ?
-                  () => this.props.onError(this.props.id) :
-                  null,
-      },
+        event: "error",
+        listener: props.onError ? () => this.props.onError(this.props.id) : null
+      }
     ];
 
     this.FB = null;
@@ -85,19 +83,15 @@ class FacebookPlayer extends React.Component {
    * Load Facebook SDK and set FB to global vars
    */
   componentDidMount() {
-    const {
-      videoId,
-      sdkVersion
-    } = this.props;
+    const { videoId, sdkVersion } = this.props;
 
     if (typeof window !== "undefined") {
-      this.loadFB(sdkVersion)
-        .then(res => {
-          if (res) {
-            this.FB = res;
-            this.createPlayer(videoId);
-          }
-        });
+      this.loadFB(sdkVersion).then(res => {
+        if (res) {
+          this.FB = res;
+          this.createPlayer(videoId);
+        }
+      });
     }
   }
 
@@ -120,8 +114,8 @@ class FacebookPlayer extends React.Component {
   /**
    * Load Facebook SDK if it is not loaded already.
    */
-  loadFB = (sdkVersion) => {
-    if(window.FB) {
+  loadFB = sdkVersion => {
+    if (window.FB) {
       return new Promise(resolve => resolve(window.FB));
     }
 
@@ -129,25 +123,31 @@ class FacebookPlayer extends React.Component {
       window.fbAsyncInit = function() {
         return resolve(window.FB);
       };
-      (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = `//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v${sdkVersion ? sdkVersion : '2.12'}`;
+      (function(d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+          return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = `//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v${
+          sdkVersion ? sdkVersion : "2.12"
+        }`;
         js.onload = function() {
           return resolve(window.FB);
-        }
+        };
         fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
+      })(document, "script", "facebook-jssdk");
     });
-  }
+  };
 
   /**
    * Create player.
    *
    * @param {string} Facebook video id
    */
-  createPlayer = (videoId) => {
+  createPlayer = videoId => {
     const {
       id,
       appId,
@@ -157,43 +157,40 @@ class FacebookPlayer extends React.Component {
       width,
       showText,
       showCaptions,
-      onReady,
+      onReady
     } = this.props;
     const FB = this.FB;
 
-    const playerId = id + '--player';
+    const playerId = id + "--player";
 
     // Clear
-    this.container.innerHTML = '';
+    this.container.innerHTML = "";
     // this.unsubscribe();
 
-    const playerDiv = document.createElement('div');
-    playerDiv.classList.add('fb-video');
+    const playerDiv = document.createElement("div");
+    playerDiv.classList.add("fb-video");
     playerDiv.id = playerId;
-    playerDiv.setAttribute('data-href', 'https://www.facebook.com/facebook/videos/' + videoId);
-    playerDiv.setAttribute('data-allowfullscreen', allowfullscreen);
-    playerDiv.setAttribute('data-autoplay', autoplay);
-    playerDiv.setAttribute('data-width', width);
-    playerDiv.setAttribute('data-show-text', showText);
-    playerDiv.setAttribute('data-show-captions', showCaptions);
+    playerDiv.setAttribute(
+      "data-href",
+      "https://www.facebook.com/facebook/videos/" + videoId
+    );
+    playerDiv.setAttribute("data-allowfullscreen", allowfullscreen);
+    playerDiv.setAttribute("data-autoplay", autoplay);
+    playerDiv.setAttribute("data-width", width);
+    playerDiv.setAttribute("data-show-text", showText);
+    playerDiv.setAttribute("data-show-captions", showCaptions);
 
     this.container.appendChild(playerDiv);
 
     FB.init({
-      appId      : appId,
-      xfbml      : true,
-      version: `v${sdkVersion ? sdkVersion : '2.12'}`
+      appId: appId,
+      xfbml: true,
+      version: `v${sdkVersion ? sdkVersion : "2.12"}`
     });
 
-
-    FB.Event.subscribe('xfbml.ready', msg => {
+    FB.Event.subscribe("xfbml.ready", msg => {
       window.msg = msg;
-      if (msg.type === 'video' &&
-          (
-            (id && msg.id === playerId) ||
-            !id
-          )
-          ) {
+      if (msg.type === "video" && ((id && msg.id === playerId) || !id)) {
         this.videoPlayer = msg.instance;
 
         // Dispatch ready event
@@ -203,7 +200,7 @@ class FacebookPlayer extends React.Component {
         this.subscribe();
       }
     });
-  }
+  };
 
   /**
    * Listen to events based on eventsToListen var.
@@ -215,11 +212,11 @@ class FacebookPlayer extends React.Component {
         const handler = this.videoPlayer.subscribe(ev.event, ev.listener);
         this.eventHandlers.push({
           event: ev.event,
-          handler,
-        })
-      };
+          handler
+        });
+      }
     });
-  }
+  };
 
   /**
    * Stop listening to events.
@@ -230,25 +227,21 @@ class FacebookPlayer extends React.Component {
         if (ev.handler.removeListener) ev.handler.removeListener(ev.event);
       });
     }
-  }
+  };
 
   /**
    * Set container var to reuse as DOM object.
    */
-  refContainer = (container) => {
+  refContainer = container => {
     this.container = container;
-  }
+  };
 
   render() {
     const { id, className } = this.props;
 
     return (
       <span>
-        <div
-          id={ id }
-          className={ className }
-          ref={ this.refContainer }
-          />
+        <div id={id} className={className} ref={this.refContainer} />
       </span>
     );
   }
