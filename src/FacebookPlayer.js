@@ -8,7 +8,7 @@ class FacebookPlayer extends React.Component {
     appId: number.isRequired,
     sdkVersion: number,
     videoId: number.isRequired,
-    width: number,
+    width: string,
     allowfullscreen: bool,
     autoplay: bool,
     showText: bool,

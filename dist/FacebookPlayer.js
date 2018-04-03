@@ -273,7 +273,7 @@ FacebookPlayer.propTypes = {
   appId: _propTypes.number.isRequired,
   sdkVersion: _propTypes.number,
   videoId: _propTypes.number.isRequired,
-  width: _propTypes.number,
+  width: _propTypes.string,
   allowfullscreen: _propTypes.bool,
   autoplay: _propTypes.bool,
   showText: _propTypes.bool,
