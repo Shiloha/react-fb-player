@@ -27,7 +27,7 @@ class FacebookPlayer extends React.Component {
     autoplay: false,
     showText: false,
     showCaptions: false,
-    width: "auto"
+    width: "100%"
   };
 
   constructor(props) {

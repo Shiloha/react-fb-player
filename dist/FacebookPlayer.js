@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = require('prop-types');
+var _propTypes = require("prop-types");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49,13 +49,14 @@ var FacebookPlayer = function (_React$Component) {
           if (d.getElementById(id)) {
             return;
           }
-          js = d.createElement(s);js.id = id;
-          js.src = '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v' + (sdkVersion ? sdkVersion : '2.12');
+          js = d.createElement(s);
+          js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v" + (sdkVersion ? sdkVersion : "2.12");
           js.onload = function () {
             return resolve(window.FB);
           };
           fjs.parentNode.insertBefore(js, fjs);
-        })(document, 'script', 'facebook-jssdk');
+        })(document, "script", "facebook-jssdk");
       });
     };
 
@@ -73,33 +74,33 @@ var FacebookPlayer = function (_React$Component) {
 
       var FB = _this.FB;
 
-      var playerId = id + '--player';
+      var playerId = id + "--player";
 
       // Clear
-      _this.container.innerHTML = '';
+      _this.container.innerHTML = "";
       // this.unsubscribe();
 
-      var playerDiv = document.createElement('div');
-      playerDiv.classList.add('fb-video');
+      var playerDiv = document.createElement("div");
+      playerDiv.classList.add("fb-video");
       playerDiv.id = playerId;
-      playerDiv.setAttribute('data-href', 'https://www.facebook.com/facebook/videos/' + videoId);
-      playerDiv.setAttribute('data-allowfullscreen', allowfullscreen);
-      playerDiv.setAttribute('data-autoplay', autoplay);
-      playerDiv.setAttribute('data-width', width);
-      playerDiv.setAttribute('data-show-text', showText);
-      playerDiv.setAttribute('data-show-captions', showCaptions);
+      playerDiv.setAttribute("data-href", "https://www.facebook.com/facebook/videos/" + videoId);
+      playerDiv.setAttribute("data-allowfullscreen", allowfullscreen);
+      playerDiv.setAttribute("data-autoplay", autoplay);
+      playerDiv.setAttribute("data-width", width);
+      playerDiv.setAttribute("data-show-text", showText);
+      playerDiv.setAttribute("data-show-captions", showCaptions);
 
       _this.container.appendChild(playerDiv);
 
       FB.init({
         appId: appId,
         xfbml: true,
-        version: 'v' + (sdkVersion ? sdkVersion : '2.12')
+        version: "v" + (sdkVersion ? sdkVersion : "2.12")
       });
 
-      FB.Event.subscribe('xfbml.ready', function (msg) {
+      FB.Event.subscribe("xfbml.ready", function (msg) {
         window.msg = msg;
-        if (msg.type === 'video' && (id && msg.id === playerId || !id)) {
+        if (msg.type === "video" && (id && msg.id === playerId || !id)) {
           _this.videoPlayer = msg.instance;
 
           // Dispatch ready event
@@ -120,7 +121,7 @@ var FacebookPlayer = function (_React$Component) {
             event: ev.event,
             handler: handler
           });
-        };
+        }
       });
     };
 
@@ -137,32 +138,32 @@ var FacebookPlayer = function (_React$Component) {
     };
 
     _this.eventsToListen = [{
-      event: 'startedPlaying',
+      event: "startedPlaying",
       listener: props.onStartedPlaying ? function () {
         return _this.props.onStartedPlaying(_this.props.id);
       } : null
     }, {
-      event: 'paused',
+      event: "paused",
       listener: props.onStartedPlaying ? function () {
         return _this.props.onPaused(_this.props.id);
       } : null
     }, {
-      event: 'finishedPlaying',
+      event: "finishedPlaying",
       listener: props.onFinishedPlaying ? function () {
         return _this.props.onFinishedPlaying(_this.props.id);
       } : null
     }, {
-      event: 'startedBuffering',
+      event: "startedBuffering",
       listener: props.onStartedBuffering ? function () {
         return _this.props.onStartedBuffering(_this.props.id);
       } : null
     }, {
-      event: 'finishedBuffering',
+      event: "finishedBuffering",
       listener: props.onFinishedBuffering ? function () {
         return _this.props.onFinishedBuffering(_this.props.id);
       } : null
     }, {
-      event: 'error',
+      event: "error",
       listener: props.onError ? function () {
         return _this.props.onError(_this.props.id);
       } : null
@@ -180,7 +181,7 @@ var FacebookPlayer = function (_React$Component) {
 
 
   _createClass(FacebookPlayer, [{
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
 
@@ -204,7 +205,7 @@ var FacebookPlayer = function (_React$Component) {
      */
 
   }, {
-    key: 'componentWillReceiveProps',
+    key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(newProps) {
       if (this.FB && newProps.videoId !== this.props.videoId) {
         this.createPlayer(newProps.videoId);
@@ -216,7 +217,7 @@ var FacebookPlayer = function (_React$Component) {
      */
 
   }, {
-    key: 'componentWillUnmount',
+    key: "componentWillUnmount",
     value: function componentWillUnmount() {}
     // this.unsubscribe();
 
@@ -248,7 +249,7 @@ var FacebookPlayer = function (_React$Component) {
      */
 
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _props2 = this.props,
           id = _props2.id,
@@ -256,13 +257,9 @@ var FacebookPlayer = function (_React$Component) {
 
 
       return _react2.default.createElement(
-        'span',
+        "span",
         null,
-        _react2.default.createElement('div', {
-          id: id,
-          className: className,
-          ref: this.refContainer
-        })
+        _react2.default.createElement("div", { id: id, className: className, ref: this.refContainer })
       );
     }
   }]);
@@ -273,9 +270,9 @@ var FacebookPlayer = function (_React$Component) {
 FacebookPlayer.propTypes = {
   id: _propTypes.string,
   className: _propTypes.string,
-  appId: _propTypes.string.isRequired,
-  sdkVersion: _propTypes.string,
-  videoId: _propTypes.string.isRequired,
+  appId: _propTypes.number.isRequired,
+  sdkVersion: _propTypes.number,
+  videoId: _propTypes.number.isRequired,
   width: _propTypes.number,
   allowfullscreen: _propTypes.bool,
   autoplay: _propTypes.bool,
@@ -294,6 +291,6 @@ FacebookPlayer.defaultProps = {
   autoplay: false,
   showText: false,
   showCaptions: false,
-  width: 'auto'
+  width: "100%"
 };
 exports.default = FacebookPlayer;
