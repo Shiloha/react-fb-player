@@ -291,6 +291,6 @@ FacebookPlayer.defaultProps = {
   autoplay: false,
   showText: false,
   showCaptions: false,
-  width: "100%"
+  width: "auto"
 };
 exports.default = FacebookPlayer;
