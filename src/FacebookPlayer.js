@@ -1,5 +1,5 @@
 import React from "react";
-import { string, number, func, bool } from "prop-types";
+import { string, number, func, bool, oneOfType} from "prop-types";
 
 class FacebookPlayer extends React.Component {
   static propTypes = {
@@ -8,7 +8,7 @@ class FacebookPlayer extends React.Component {
     appId: number.isRequired,
     sdkVersion: number,
     videoId: number.isRequired,
-    width: string,
+    width: oneOfType([string, number]),
     allowfullscreen: bool,
     autoplay: bool,
     showText: bool,
